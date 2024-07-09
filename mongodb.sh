@@ -20,7 +20,7 @@ VALIDATE(){
     fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+cp mongo.rep /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 VALIDATE $? "Copy mongo.repo"
 
 if [ $? -ne 0 ]
