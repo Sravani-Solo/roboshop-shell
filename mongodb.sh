@@ -20,23 +20,25 @@ VALIDATE(){
     fi
 }
 
-cp mongo.rep /etc/yum.repos.d/mongo.repo &>> $LOGFILE
-VALIDATE $? "Copy mongo.repo"
-
 if [ $? -ne 0 ]
 then
     echo -e "$R ERROR: Run this script with root user $N"
     exit 1
 else
-    if rpm -q mongodb-org
-    then
-        echo -e "MongoDB already Installed ... $Y SKIPPING $N"
-        exit 1
-    else
-        echo -e "$Y Installing MongoDB ... $N"
-        dnf install mongodb-org -y
-        VALIDATE $? "Installing MongoDB" &>> $LOGFILE
-    fi
+    echo -e "$Y You are a root user $N"
+fi  
+
+cp mongo.rep /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+VALIDATE $? "Copy mongo.repo"
+
+if rpm -q mongodb-org
+then
+    echo -e "MongoDB already Installed ... $Y SKIPPING $N"
+    exit 1
+else
+    echo -e "$Y Installing MongoDB ... $N"
+    dnf install mongodb-org -y
+    VALIDATE $? "Installing MongoDB" &>> $LOGFILE
 fi
 
 systemctl enable mongod
