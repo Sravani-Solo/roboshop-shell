@@ -20,7 +20,7 @@ VALIDATE(){
     fi
 }
 
-if [ $? -ne 0 ]
+if [ $ID -ne 0 ]
 then
     echo -e "$R ERROR: Run this script with root user $N"
     exit 1
@@ -37,16 +37,16 @@ then
     exit 1
 else
     echo -e "$Y Installing MongoDB ... $N"
-    dnf install mongodb-org -y
-    VALIDATE $? "Installing MongoDB" &>> $LOGFILE
+    dnf install mongodb-org -y &>> $LOGFILE
+    VALIDATE $? "Installing MongoDB"
 fi
 
-systemctl enable mongod
-VALIDATE $? "Enabling MongoDB" &>> $LOGFILE
-systemctl start mongod
-VALIDATE $? "Starting MongoDB" &>> $LOGFILE
-sed -i '127.01.0/0.0.0.0/g' /etc/mongod.config &>> $LOGFILE
-VALIDATE $? "Allowing MongoDB to listen on all interfaces" &>> $LOGFILE
-systemctl restart mongod
-VALIDATE $? "Restarting MongoDB" &>> $LOGFILE
+systemctl enable mongod &>> $LOGFILE
+VALIDATE $? "Enabling MongoDB"
+systemctl start mongod &>> $LOGFILE
+VALIDATE $? "Starting MongoDB"
+sed -i 's/127.01.0/0.0.0.0/g' /etc/mongod.config &>> $LOGFILE
+VALIDATE $? "Allowing MongoDB to listen on all interfaces"
+systemctl restart mongod &>> $LOGFILE
+VALIDATE $? "Restarting MongoDB"
     
