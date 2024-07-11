@@ -45,7 +45,7 @@ systemctl enable mongod &>> $LOGFILE
 VALIDATE $? "Enabling MongoDB"
 systemctl start mongod &>> $LOGFILE
 VALIDATE $? "Starting MongoDB"
-sed -i 's/127.01.0/0.0.0.0/g' /etc/mongod.config &>> $LOGFILE
+sed -i 's/127.0.01/0.0.0.0/g' /etc/mongod.config &>> $LOGFILE
 VALIDATE $? "Allowing MongoDB to listen on all interfaces"
 systemctl restart mongod &>> $LOGFILE
 VALIDATE $? "Restarting MongoDB"
